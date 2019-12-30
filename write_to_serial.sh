@@ -61,21 +61,21 @@ EOF
 DEVICE=$1
 
 if [ ! $DEVICE ] || [ $# != 1 ] ; then
-	echo "$USAGE"
+	echo >&2 "$USAGE"
 	exit 1
 elif ! [[ "$DEVICE" =~ ^\/dev\/tty[a-zA-Z0-9]{1,6}$ ]] ; then
-	echo "Incorrect device $DEVICE."
+	echo >&2 "ERROR : Incorrect device $DEVICE."
 	exit 1
 elif ! [ -c "$DEVICE" ] ; then
-	cat <<- EOT
-		Device $DEVICE does not exist or is not a valid
-		character file. Please check the path.
+	cat >&2 <<- EOT
+		ERROR : Device $DEVICE does not exist or is not
+		a valid character file. Please check the path.
 	EOT
 	exit 1
 elif ! [ -w "$DEVICE" ] ; then
-	cat <<- EOT
-		Device $DEVICE is not writable by the current user.
-		Please check the file's permissions.
+	cat >&2 <<- EOT
+		ERROR : Device $DEVICE is not writable by the
+		current user. Please check the file's permissions.
 	EOT
 	exit 1
 fi
@@ -113,7 +113,7 @@ USERINPUT=""
 while true ; do
 
 	if ! [ -c $DEVICE -a -w $DEVICE ] ; then
-		echo "Lost access to device $DEVICE. Aborting."
+		echo >&2 "ERROR : Lost access to device $DEVICE. Aborting."
 		exit 1
 	fi
 
