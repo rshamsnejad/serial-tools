@@ -168,7 +168,7 @@ USERINPUT=""
 
 while true ; do
 
-	if ! [ -c $DEVICE -a -w $DEVICE ] ; then
+	if ! [ `#-c $DEVICE -a` -w $DEVICE ] ; then
 		echo >&2 "ERROR : Lost access to device $DEVICE. Aborting."
 		exit 1
 	fi
