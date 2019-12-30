@@ -155,14 +155,16 @@ NOTICE="=== Mode : "
 PROMPT_COMMAND=""
 
 if ( $BLOCK ) ; then
-	NOTICE+="BLOCK"
-	PROMPT_COMMAND="echo $PROMPT_DEVICE ; "'$READ_VARIABLE=$(cat)'
+	NOTICE+="BLOCK. the taskbar, Block the taskbar..."
+	NOTICE+=$'\n'
+	NOTICE+="Type <Ctrl-D> to send a block"
+	PROMPT_COMMAND="echo -n $PROMPT_DEVICE ; $READ_VARIABLE="'$(cat) ; echo'
 elif ( $LINE ) ; then
-	NOTICE+="LINE"
+	NOTICE+="LINE. Hold it, love isn't always on time"
 	PROMPT_COMMAND="read $READ_PROMPT $READ_VARIABLE"
 elif ( $CHARACTER ) ; then
-	NOTICE+="CHARACTER"
-	PROMPT_COMMAND="read $READ_PROMPT -N 1 $READ_VARIABLE"
+	NOTICE+="CHARACTER. Going through life one byte at a time"
+	PROMPT_COMMAND="read $READ_PROMPT -N 1 $READ_VARIABLE ; echo"
 else
 	echo >&2 "ERROR : Unable to set mode. Aborting."
 	exit 1
@@ -175,12 +177,10 @@ _DEBUG_PRINT "SEND_COMMAND=$SEND_COMMAND"
 _DEBUG_PRINT "NOTICE=$NOTICE"
 _DEBUG_PRINT "PROMPT_COMMAND=$PROMPT_COMMAND"
 
-cat << EOT
-============== Serial port output ===============
 
-Type <Ctrl+C> to exit.
-
-EOT
+echo "============== Serial port output ==============="
+echo "$NOTICE"
+echo "Type <Ctrl-C> to exit"
 
 USERINPUT=""
 
@@ -191,6 +191,6 @@ while true ; do
 		exit 1
 	fi
 
-	#read $READ_PROMPT USERINPUT
+	eval "$PROMPT_COMMAND"
 	echo "$USERINPUT" > $DEVICE
 done
