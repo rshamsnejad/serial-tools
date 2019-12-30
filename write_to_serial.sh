@@ -102,9 +102,7 @@ fi
 
 cat << EOT
 ============== Serial port output ===============
-Everything typed here will be sent as is to the
-serial device after each press of <Enter> (which
-will not be sent itself)
+
 Type <Ctrl+C> to exit.
 
 EOT
