@@ -38,17 +38,15 @@ done
 
 ### BEGIN SANITY CHECK
 
-USAGE=$(cat << EOF
+USAGE=$(cat << EOT
 Usage : $0 [-hblc] <serial device>
 Example : $0 -l /dev/ttyUSB0
 
 -h, --help : 	  Show this message
 
 -b, --block : 	  Block mode. In this mode you can freely type,
-		  and all will be sent to the device after the
-		  following character sequence (which is not sent
-		  itself) :
-			  EOT<Enter>
+		  and all will be sent to the device after pressing
+		  <Ctrl-D> (which is not sent itself)
 
 -l, --line :	  Line mode. In this mode everything is sent
 		  upon pressing <Enter> (which is not sent itself).
@@ -56,7 +54,7 @@ Example : $0 -l /dev/ttyUSB0
 
 -c, --character : Character mode. In this mode, each single entered
 		  character is sent straight away on key press.
-EOF
+EOT
 )
 
 DEVICE=$1
