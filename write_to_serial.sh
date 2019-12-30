@@ -45,7 +45,7 @@ OPTS=`getopt -o hblc --long help,block,line,character: -n 'parse-options' -- "$@
 
 if [ $? != 0 ] ; then
 	echo >&2 "ERROR : Failed parsing options."
-	_DEBUG_DONT_RUN exit 1
+	exit 1
 fi
 
 # echo "$OPTS"
@@ -99,7 +99,7 @@ DEVICE=$1
 
 if [ ! $DEVICE ] || [ $# != 1 ] ; then
 	echo >&2 "$USAGE"
-	_DEBUG_DONT_RUN exit 1
+	exit 1
 elif ! [[ "$DEVICE" =~ ^\/dev\/tty[a-zA-Z0-9]{1,6}$ ]] ; then
 	echo >&2 "ERROR : Incorrect device $DEVICE."
 	_DEBUG_DONT_RUN exit 1
@@ -114,7 +114,7 @@ elif ! [ -w "$DEVICE" ] ; then
 		ERROR : Device $DEVICE is not writable by the
 		current user. Please check the file's permissions.
 	EOT
-	_DEBUG_DONT_RUN exit 1
+	exit 1
 fi
 
 if ( $BLOCK && $LINE ) || \
@@ -125,7 +125,7 @@ then
 	echo >&2 "ERROR : Please choose a single mode of operation."
 	echo
 	echo >&2 "$USAGE"
-	_DEBUG_DONT_RUN exit 1
+	exit 1
 fi
 
 ### END SANITY CHECK
@@ -154,7 +154,7 @@ elif ( $CHARACTER ) ; then
 	PROMPT_COMMAND="read $READ_PROMPT -N 1 $READ_VARIABLE"
 else
 	echo >&2 "ERROR : Unable to set mode. Aborting."
-	_DEBUG_DONT_RUN exit 1
+	exit 1
 fi
 
 cat << EOT
@@ -170,9 +170,9 @@ while true ; do
 
 	if ! [ -c $DEVICE -a -w $DEVICE ] ; then
 		echo >&2 "ERROR : Lost access to device $DEVICE. Aborting."
-		_DEBUG_DONT_RUN exit 1
+		exit 1
 	fi
 
-	read $READ_PROMPT USERINPUT
+	#read $READ_PROMPT USERINPUT
 	echo "$USERINPUT" > $DEVICE
 done
