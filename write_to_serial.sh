@@ -6,7 +6,7 @@
 
 # Set this to true if you want to output debug messages
 # and activate the following tools
-_DEBUG=true
+_DEBUG=false
 # Set this to false if you want to disable debug output
 # but not the rest of the following
 _VERBOSE=false
@@ -186,7 +186,7 @@ USERINPUT=""
 
 while true ; do
 
-	if ! [ `#-c $DEVICE -a` -w $DEVICE ] ; then
+	if ! [ -c $DEVICE -a -w $DEVICE ] ; then
 		echo >&2 "ERROR : Lost access to device $DEVICE. Aborting."
 		exit 1
 	fi
