@@ -25,7 +25,7 @@ _DEBUG_RUN_WITH_TRACE()
 
 _DEBUG_DONT_RUN()
 {
-	if ( !$_DEBUG ) ; then
+	if ( ! $_DEBUG ) ; then
 		$@
 	fi
 }
