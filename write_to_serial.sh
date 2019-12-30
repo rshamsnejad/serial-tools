@@ -1,6 +1,33 @@
 #!/bin/bash
 
 ################################################################################
+# DEBUG HELPER
+################################################################################
+
+# Set this to true if you want to output debug messages
+# and activate the following tools
+_DEBUG=true
+
+_DEBUG_RUN()
+{
+	if ( $_DEBUG ) ; then
+		$@
+	fi
+}
+
+_DEBUG_DONT_RUN()
+{
+	if ( !$_DEBUG ) ; then
+		$@
+	fi
+}
+
+_DEBUG_PRINT()
+{
+	_DEBUG_RUN echo "-- DEBUG : $*"
+}
+
+################################################################################
 # OPTION PARSING
 ################################################################################
 
