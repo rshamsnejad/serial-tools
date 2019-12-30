@@ -98,7 +98,28 @@ fi
 # BEGINNING OF ACTUAL PROGRAM
 ################################################################################
 
+# Set the mode to work with
+PROMPT_DEVICE='"$DEVICE> "'
+READ_PROMPT="-p $PROMPT_DEVICE"
+READ_VARIABLE="USERINPUT"
+SEND_COMMAND="echo \"\$USERINPUT\" > \$DEVICE"
 
+NOTICE="=== Mode : "
+PROMPT_COMMAND=""
+
+if ( $BLOCK ) ; then
+	NOTICE+="BLOCK"
+	PROMPT_COMMAND="echo $PROMPT_DEVICE ; "'$READ_VARIABLE=$(cat)'
+elif ( $LINE ) ; then
+	NOTICE+="LINE"
+	PROMPT_COMMAND="read $READ_PROMPT $READ_VARIABLE"
+elif ( $CHARACTER ) ; then
+	NOTICE+="CHARACTER"
+	PROMPT_COMMAND="read $READ_PROMPT -N 1 $READ_VARIABLE"
+else
+	echo >&2 "ERROR : Unable to set mode. Aborting."
+	exit 1
+fi
 
 cat << EOT
 ============== Serial port output ===============
@@ -116,6 +137,6 @@ while true ; do
 		exit 1
 	fi
 
-	read -p "$DEVICE> " USERINPUT
+	read $READ_PROMPT USERINPUT
 	echo "$USERINPUT" > $DEVICE
 done
