@@ -14,6 +14,14 @@ _DEBUG_RUN()
 		$@
 	fi
 }
+_DEBUG_RUN_WITH_TRACE()
+{
+	if ( $_DEBUG ) ; then
+		set -x
+		$@
+		set +x
+	fi
+}
 
 _DEBUG_DONT_RUN()
 {
