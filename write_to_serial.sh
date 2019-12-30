@@ -42,3 +42,10 @@ serial device after each press of <Enter> (which
 will not be sent itself)
 Type <Ctrl+C> to exit.
 EOT
+
+USERINPUT=""
+
+while true ; do
+	read -p "$DEVICE> " USERINPUT
+	echo "$USERINPUT" > $DEVICE
+done
