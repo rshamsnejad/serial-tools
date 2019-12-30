@@ -7,6 +7,14 @@
 # Set this to true if you want to output debug messages
 # and activate the following tools
 _DEBUG=true
+# Set this to false if you want to disable debug output
+# but not the rest of the following
+_VERBOSE=false
+
+
+if ( ! $_DEBUG ) ; then
+	_VERBOSE=false
+fi
 
 _DEBUG_RUN()
 {
@@ -32,7 +40,9 @@ _DEBUG_DONT_RUN()
 
 _DEBUG_PRINT()
 {
-	_DEBUG_RUN echo "-- DEBUG : $*"
+	if ( $_VERBOSE ) ; then
+		echo "-- DEBUG : $*"
+	fi
 }
 
 ################################################################################
