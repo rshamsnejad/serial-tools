@@ -46,7 +46,8 @@ Example : $0 -l /dev/ttyUSB0
 
 -b, --block : 	  Block mode. In this mode you can freely type,
 		  and all will be sent to the device after the
-		  following character sequence :
+		  following character sequence (which is not sent
+		  itself) :
 			  EOT<Enter>
 
 -l, --line :	  Line mode. In this mode everything is sent
