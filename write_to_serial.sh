@@ -41,11 +41,18 @@ Everything typed here will be sent as is to the
 serial device after each press of <Enter> (which
 will not be sent itself)
 Type <Ctrl+C> to exit.
+
 EOT
 
 USERINPUT=""
 
 while true ; do
+
+	if ! [ -c $DEVICE -a -w $DEVICE ] ; then
+		echo "Lost access to device $DEVICE. Aborting."
+		exit 1
+	fi
+
 	read -p "$DEVICE> " USERINPUT
 	echo "$USERINPUT" > $DEVICE
 done
