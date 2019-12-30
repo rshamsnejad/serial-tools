@@ -67,6 +67,7 @@ while true; do
   	esac
 done
 
+_DEBUG_PRINT echo "DEVICE=$1"
 _DEBUG_PRINT echo "HELP=$HELP"
 _DEBUG_PRINT echo "BLOCK=$BLOCK"
 _DEBUG_PRINT echo "LINE=$LINE"
