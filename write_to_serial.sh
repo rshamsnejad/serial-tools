@@ -46,6 +46,11 @@ _DEBUG_PRINT()
 	fi
 }
 
+_ERROR_PRINT()
+{
+	echo >&2 "$*"
+}
+
 ################################################################################
 # OPTION PARSING
 ################################################################################
@@ -55,7 +60,7 @@ _DEBUG_PRINT()
 OPTS=`getopt -o hblc --long help,block,line,character: -n 'parse-options' -- "$@"`
 
 if [ $? != 0 ] ; then
-	echo >&2 "ERROR : Failed parsing options."
+	_ERROR_PRINT "ERROR : Failed parsing options."
 	exit 1
 fi
 
@@ -110,10 +115,10 @@ EOT
 DEVICE=$1
 
 if [ ! $DEVICE ] || [ $# != 1 ] ; then
-	echo >&2 "$USAGE"
+	_ERROR_PRINT "$USAGE"
 	exit 1
 elif ! [[ "$DEVICE" =~ ^\/dev\/tty[a-zA-Z0-9]{1,6}$ ]] ; then
-	echo >&2 "ERROR : Incorrect device $DEVICE."
+	_ERROR_PRINT "ERROR : Incorrect device $DEVICE."
 	_DEBUG_DONT_RUN exit 1
 elif ! [ -c "$DEVICE" ] ; then
 	cat >&2 <<- EOT
@@ -134,9 +139,9 @@ if ( $BLOCK && $LINE ) || \
 ( $LINE && $CHARACTER ) || \
 ( ! ( $BLOCK || $LINE || $CHARACTER ) )
 then
-	echo >&2 "ERROR : Please choose a single mode of operation."
+	_ERROR_PRINT "ERROR : Please choose a single mode of operation."
 	echo
-	echo >&2 "$USAGE"
+	_ERROR_PRINT "$USAGE"
 	exit 1
 fi
 
@@ -167,7 +172,7 @@ elif ( $CHARACTER ) ; then
 	NOTICE+="CHARACTER. Going through life one byte at a time"
 	PROMPT_COMMAND="read $READ_PROMPT -N 1 $READ_VARIABLE ; echo"
 else
-	echo >&2 "ERROR : Unable to set mode. Aborting."
+	_ERROR_PRINT "ERROR : Unable to set mode. Aborting."
 	exit 1
 fi
 
@@ -188,7 +193,7 @@ USERINPUT=""
 while true ; do
 
 	if ! [ -c $DEVICE -a -w $DEVICE ] ; then
-		echo >&2 "ERROR : Lost access to device $DEVICE. Aborting."
+		_ERROR_PRINT "ERROR : Lost access to device $DEVICE. Aborting."
 		exit 1
 	fi
 
