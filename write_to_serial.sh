@@ -114,6 +114,12 @@ Example : $0 -l /dev/ttyUSB0
 EOT
 )
 
+# Print usage if -h is passed, then exit
+if ( $HELP ) ; then
+	_ERROR_PRINT "$USAGE"
+	exit 0
+fi
+
 DEVICE=$1
 
 if [ ! $DEVICE ] || [ $# != 1 ] ; then
