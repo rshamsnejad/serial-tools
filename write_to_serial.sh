@@ -206,5 +206,7 @@ while true ; do
 	fi
 
 	eval "$PROMPT_COMMAND"
-	echo "$USERINPUT" > $DEVICE
+	_DEBUG_PRINT "USERINPUT=$USERINPUT"
+	printf "%s\n" "$USERINPUT" > $DEVICE
+	# echo "$USERINPUT" > $DEVICE
 done
