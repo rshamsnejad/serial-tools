@@ -1,4 +1,4 @@
-$COMport= new-Object System.IO.Ports.SerialPort COM6,9600,None,8,one
+$COMport= new-Object System.IO.Ports.SerialPort COM6,115200,None,8,one
 
 if(-not $COMport.IsOpen)
 {
