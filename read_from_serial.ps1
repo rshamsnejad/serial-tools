@@ -9,5 +9,4 @@ while(1)
 {
     $InputChar = [char]$COMport.ReadChar()
     Write-Host -NoNewline $InputChar
-    Start-Sleep -Milliseconds 1
 }
