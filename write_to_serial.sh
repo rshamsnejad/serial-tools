@@ -191,6 +191,7 @@ _DEBUG_PRINT "SEND_COMMAND=$SEND_COMMAND"
 _DEBUG_PRINT "NOTICE=$NOTICE"
 _DEBUG_PRINT "PROMPT_COMMAND=$PROMPT_COMMAND"
 
+stty -F /dev/ttyUSB0 115200 cs8 -cstopb -parenb
 
 echo "============== Serial port output ==============="
 echo "$NOTICE"
