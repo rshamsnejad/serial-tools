@@ -8,5 +8,5 @@ if(-not $COMport.IsOpen)
 while(1)
 {
     $COMport.ReadLine()
-    Start-Sleep -Seconds 1
+    Start-Sleep -Milliseconds 1
 }
