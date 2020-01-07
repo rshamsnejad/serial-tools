@@ -6,7 +6,7 @@
 
 # Set this to true if you want to output debug messages
 # and activate the following tools
-_DEBUG=true
+_DEBUG=false
 # Set this to false if you want to disable debug output
 # but not the rest of the following
 _VERBOSE=true
@@ -100,23 +100,27 @@ do
 	SYS_LIST_GLOBAL=("${SYS_LIST_GLOBAL[@]/$i/}")
 done
 
+DEV_LIST=()
+DEV_TEMP=""
 
 # Resulting list
 for i in "${SYS_LIST_GLOBAL[@]}"
 do
-	[ $i ] && _DEBUG_PRINT "SYS $i"
+	if [ $i ] ; then
+
+		_DEBUG_PRINT "SYS $i"
+		DEV_TEMP=$(echo -n "/dev/" ; udevadm info -q name -p $i)
+
+		if [ -c "$DEV_TEMP" ] ; then
+			DEV_LIST+=("$DEV_TEMP")
+		else
+			_DEBUG_PRINT "Discovered device $DEV_TEMP is not a character device."
+		fi
+
+	fi
 done
 
-# for i in $(echo "$SYS_LIST_GLOBAL" | grep "ttyS")
-# do
-# 	if [ "x$(cat $i)" = "0" ] ; then
-#
-# DEVICE_LIST=$(\
-# 	for i in $SYS_LIST_GLOBAL
-# 	do
-# 		echo -n "/dev/"
-# 		udevadm info -q name -p $i
-# 	done \
-# 	)
-#
-# _DEBUG_PRINT "$DEVICE_LIST"
+for i in "${DEV_LIST[@]}"
+do
+	echo "$i"
+done
