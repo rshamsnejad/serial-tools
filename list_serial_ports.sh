@@ -104,7 +104,7 @@ done
 # Resulting list
 for i in "${SYS_LIST_GLOBAL[@]}"
 do
-	_DEBUG_PRINT "SYS $i"
+	[ $i ] && _DEBUG_PRINT "SYS $i"
 done
 
 # for i in $(echo "$SYS_LIST_GLOBAL" | grep "ttyS")
