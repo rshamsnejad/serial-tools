@@ -19,7 +19,7 @@ fi
 _DEBUG_PRINT()
 {
 	if ( $_VERBOSE ) ; then
-		echo "-- DEBUG : $*"
+		echo >&2 "-- DEBUG : $*"
 	fi
 }
 
