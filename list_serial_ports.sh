@@ -70,7 +70,7 @@ SYS_LIST_INTERNAL=()
 
 for i in "${SYS_LIST_GLOBAL[@]}"
 do
-	if [ $i != "*/ttyS*" ] ; then
+	if [[ $i =~ ^.*/ttyS[0-9]{1,3} ]] ; then
 		SYS_LIST_INTERNAL+=("$i")
 	fi
 done
